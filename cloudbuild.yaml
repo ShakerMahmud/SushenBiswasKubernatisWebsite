@@ -1,0 +1,21 @@
+steps:
+  # build the container image
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-t", "gcr.io/[PROJECT_ID]/wordpress:v1", "."]
+  # push container image
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/[PROJECT_ID]/wordpress:v1"]
+  # deploy container image to GKE
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - apply
+  - --filename=k8s/deployment.yaml
+  - --location=[LOCATION]
+  - --cluster=[CLUSTER]
+  # expose wordpress using k8s service
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - apply
+  - --filename=k8s/svc.yaml
+  - --location=[LOCATION]
+  - --cluster=[CLUSTER]

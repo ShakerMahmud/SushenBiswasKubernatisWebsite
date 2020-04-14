@@ -1,0 +1,33 @@
+steps:
+  # build the docker image
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build",
+        "-f",
+        "Dockerfile",
+        "-t", 
+         "gcr.io/$PROJECT_ID/test-saishma-wordpress",
+         "--build-arg",
+         "dbhost=$_DB_HOST",
+         "--build-arg",
+         "dbname=$_DB_NAME",
+         "--build-arg",
+         "dbuser=$_DB_USER",
+         "--build-arg",
+         "dbpassword=$_DB_PASSWORD",
+         "--no-cache",
+         "."]
+  # push docker image yo GCR
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/test-saishma-wordpress"]
+  #Create kubernetes deployment
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/deployment.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=$_GKE_LOCATION'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER'
+  #Create kubernetes service to access the application
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/svc.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=$_GKE_LOCATION'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER'

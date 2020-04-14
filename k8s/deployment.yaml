@@ -1,0 +1,26 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+    spec:
+      containers:
+      - name: wordpress
+        image: gcr.io/sushenbiswas/test-saishma-wordpress
+        imagePullPolicy: Always
+        ports:
+        - name: wordpress
+          containerPort: 80
