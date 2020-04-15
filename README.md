@@ -29,9 +29,6 @@ Go to SQL Connection
 and add this 3 ip to public ip
 
 
-Explore the IP the Service and ingress Sections
-
-
 Step-6
 Go to your cluster and connect cloud shell:
 
@@ -63,3 +60,5 @@ whoami
 ```
 chmod a+rwx <file>
 ```
+
+Explore the IP the Service and ingress Sections
