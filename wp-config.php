@@ -17,7 +17,8 @@
  *
  * @package WordPress
  */
- define(‘WP_ALLOW_REPAIR’, true);
+
+ // define(‘WP_ALLOW_REPAIR’, true);
 
 
 // ** MySQL settings - You can get this info from your web host ** //
@@ -80,6 +81,8 @@ $table_prefix = 'wp_';
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
 define( 'WP_DEBUG', false );
+
+define('FS_METHOD', 'direct');
 
 /* That's all, stop editing! Happy publishing. */
 
